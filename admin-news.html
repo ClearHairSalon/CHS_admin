@@ -199,7 +199,6 @@ btnClear.addEventListener('click', ()=>{
 async function loadAnnouncements(){
   articlesDiv.innerHTML="";
   const snapshot = await db.collection("announcements")
-    .orderBy("pinned","desc")
     .orderBy("createdAt","desc")
     .get();
   snapshot.forEach((doc)=>{
