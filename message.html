@@ -12,7 +12,7 @@
   --muted:#666;
   --btn:#ccc;
 }
-body{font-family:Arial, Helvetica, sans-serif;background:var(--bg);margin:0;padding:0;color:#333;overflow-x:hidden;}
+body{font-family:Arial, Helvetica, sans-serif;background:var(--bg);margin:0;padding:0;color:#333}
 
 /* Header / Nav */
 header{
@@ -22,90 +22,39 @@ header{
   align-items:center;
   justify-content:space-between;
   flex-wrap:wrap;
-  position: relative;
 }
 header h1{margin:0;color:#4a7c53;font-weight:bold;font-size:18px;}
 
-.nav-wrapper {
-  position: relative;
-  width: 100%;
-  overflow: hidden; /* 限制範圍 */
-}
 
 nav {
-  overflow-x: auto;
-  overflow-y: hidden; /* ✅ 禁止上下滾動 */
-  -webkit-overflow-scrolling: touch;
-  scroll-behavior: smooth;
-  white-space: nowrap;
+  overflow-x: auto;           /* 超出寬度時水平滑動 */
+  overflow-y: hidden;         /* 禁止上下滾動 */
+  -webkit-overflow-scrolling: touch; /* 手機滑動順暢 */
 }
 
 nav ul{
   list-style:none;
-  display:inline-flex;
+  display:flex;
   gap:12px;
   margin:0;
-  padding:0 40px; /* 給箭頭留空間 */
+  padding:0;
+  white-space:nowrap;
 }
-
 nav a{
   text-decoration:none;
   color:#333;
   font-weight:bold;
   padding:6px 12px;
   border-radius:4px;
-  display:inline-block;
-  white-space:nowrap;
+  flex-shrink: 0;             /* 防止自動壓縮 */
 }
 nav a:hover, nav a.active{background:#7bd8a2;color:#fff;}
-
-/* 左右箭頭 */
-.nav-arrow {
-  position:absolute;
-  top:50%;
-  transform:translateY(-50%);
-  width:30px;
-  height:40px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  color:#4a7c53;
-  font-size:20px;
-  cursor:pointer;
-  background:rgba(255,255,255,0.7);
-  border-radius:50%;
-  opacity:0;
-  transition:opacity 0.3s;
-  pointer-events:none;
-  user-select:none;
-}
-.nav-arrow.left{
-  left:0;
-  background:linear-gradient(to right, var(--accent), transparent);
-}
-.nav-arrow.right{
-  right:0;
-  background:linear-gradient(to left, var(--accent), transparent);
-}
-.nav-arrow.visible{
-  opacity:1;
-  pointer-events:auto;
-}
 
 main { max-width:1000px; margin:40px auto; padding:0 20px; }
 h1 { color:#4a7c53; text-align:center; margin-bottom:30px; }
 
-/* 表格容器，防止超出 */
-.table-container {
-  width: 100%;
-  overflow-x: auto;
-  -webkit-overflow-scrolling: touch;
-}
-
-/* 表格樣式 */
 table {
   width:100%;
-  min-width: 800px;
   border-collapse: collapse;
   background:var(--card);
   box-shadow:0 2px 8px rgba(0,0,0,0.1);
@@ -113,14 +62,6 @@ table {
   overflow:hidden;
 }
 th, td { border-bottom:1px solid #ccc; padding:12px 15px; text-align:left; }
-
-th, td { white-space: nowrap; }
-td:nth-child(3) { 
-  white-space: normal;
-  word-break: break-word;
-  max-width: 420px;
-}
-
 th { background:#7bd8a2; color:#fff; }
 tr:nth-child(even) { background:#e6f7ed; }
 tr.replied { opacity: 0.6; }
@@ -130,39 +71,32 @@ tr.replied { opacity: 0.6; }
 
 <header>
   <h1>可莉兒 Hair Salon - 管理後台</h1>
-  <div class="nav-wrapper">
-    <div class="nav-arrow left" id="left-arrow">❮</div>
-    <nav id="nav-scroll">
-      <ul id="nav-list">
-        <li><a href="admin-calendar.html">行事曆管理</a></li>
-        <li><a href="vip_test.html">VIP管理</a></li>
-        <li><a href="admin-news.html">公告管理</a></li>
-        <li><a href="message.html" class="active">留言管理</a></li>
-      </ul>
-    </nav>
-    <div class="nav-arrow right" id="right-arrow">❯</div>
-  </div>
+  <nav>
+    <ul>
+      <li><a href="admin-calendar.html">行事曆管理</a></li>
+      <li><a href="vip_test.html">VIP管理</a></li>
+      <li><a href="admin-news.html">公告管理</a></li>
+      <li><a href="message.html" class="active">留言管理</a></li>
+    </ul>
+  </nav>
 </header>
 
 <main>
   <h1>留言管理</h1>
-
-  <div class="table-container">
-    <table>
-      <thead>
-        <tr>
-          <th>姓名</th>
-          <th>電子郵件</th>
-          <th>留言內容</th>
-          <th>送出時間</th>
-          <th>已回覆</th>
-        </tr>
-      </thead>
-      <tbody id="messages-table">
-        <!-- 留言會自動載入 -->
-      </tbody>
-    </table>
-  </div>
+  <table>
+    <thead>
+      <tr>
+        <th>姓名</th>
+        <th>電子郵件</th>
+        <th>留言內容</th>
+        <th>送出時間</th>
+        <th>已回覆</th>
+      </tr>
+    </thead>
+    <tbody id="messages-table">
+      <!-- 留言會自動載入 -->
+    </tbody>
+  </table>
 </main>
 
 <!-- Firebase SDK -->
@@ -190,6 +124,7 @@ db.collection('messages').orderBy('createdAt', 'desc').onSnapshot(snapshot => {
     messages.push({id: doc.id, ...data, replied: data.replied || false});
   });
 
+  // 先把未回覆排上方
   messages.sort((a,b) => a.replied - b.replied);
 
   tableBody.innerHTML = "";
@@ -197,23 +132,28 @@ db.collection('messages').orderBy('createdAt', 'desc').onSnapshot(snapshot => {
     const row = document.createElement('tr');
     if(data.replied) row.classList.add('replied');
 
+    // 姓名
     const nameCell = document.createElement('td');
     nameCell.textContent = data.name || '';
     row.appendChild(nameCell);
 
+    // 電子郵件
     const emailCell = document.createElement('td');
     emailCell.textContent = data.email || '';
     row.appendChild(emailCell);
 
+    // 留言內容
     const messageCell = document.createElement('td');
     messageCell.textContent = data.message || '';
     row.appendChild(messageCell);
 
+    // 送出時間
     const timeCell = document.createElement('td');
     const date = data.createdAt ? data.createdAt.toDate() : new Date();
     timeCell.textContent = date.toLocaleString();
     row.appendChild(timeCell);
 
+    // 已回覆勾勾
     const repliedCell = document.createElement('td');
     const checkbox = document.createElement('input');
     checkbox.type = 'checkbox';
@@ -226,29 +166,6 @@ db.collection('messages').orderBy('createdAt', 'desc').onSnapshot(snapshot => {
 
     tableBody.appendChild(row);
   });
-});
-
-// 導覽列箭頭控制
-const navScroll = document.getElementById('nav-scroll');
-const leftArrow = document.getElementById('left-arrow');
-const rightArrow = document.getElementById('right-arrow');
-
-function updateArrows() {
-  const scrollLeft = navScroll.scrollLeft;
-  const maxScroll = navScroll.scrollWidth - navScroll.clientWidth;
-  leftArrow.classList.toggle('visible', scrollLeft > 10);
-  rightArrow.classList.toggle('visible', scrollLeft < maxScroll - 10);
-}
-
-navScroll.addEventListener('scroll', updateArrows);
-window.addEventListener('resize', updateArrows);
-updateArrows();
-
-leftArrow.addEventListener('click', () => {
-  navScroll.scrollBy({ left: -150, behavior: 'smooth' });
-});
-rightArrow.addEventListener('click', () => {
-  navScroll.scrollBy({ left: 150, behavior: 'smooth' });
 });
 </script>
 
