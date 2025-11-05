@@ -17,6 +17,7 @@ body{
   background:var(--bg);
   margin:0;
   padding:0;
+  overflow-x: hidden; /* 阻止整個頁面水平滾動 */
 }
 header{
   background:#a8e6cf;
@@ -61,16 +62,30 @@ nav a:hover, nav a.active{
   background:#7bd8a2;
   color:#fff;
 }
-.container{max-width:1100px;margin:18px auto}
-.row{display:flex;gap:12px;flex-wrap:wrap}
+.container{
+  max-width:1100px;
+  margin:18px auto;
+  padding: 0 12px; /* 小螢幕內縮 */
+  box-sizing: border-box;
+}
+.row{
+  display:flex;
+  gap:12px;flex-wrap:wrap;
+  flex-wrap: wrap; /* 小螢幕自動換行 */
+
+}
 .card{background:var(--card);border-radius:10px;padding:12px;box-shadow:0 6px 20px rgba(0,0,0,0.05)}
-.col{flex:1;min-width:280px}
-input,button,select,textarea{
+.col{
+  flex:1 1 280px;
+  min-width:0px;
+}
+input,button,select,textarea {
   font-size:14px;
   padding:8px;
   border-radius:6px;
-  border:1px solid #ddd
-
+  border:1px solid #ddd;
+  max-width: 100%;
+  box-sizing: border-box;  /* 包含 padding 與 border */
 }
 
 button{cursor:pointer;background:var(--btn);border:none}
@@ -79,7 +94,12 @@ button{cursor:pointer;background:var(--btn);border:none}
 table{width:100%;border-collapse:collapse}
 td,th{padding:8px;border-bottom:1px solid #f0f0f0;text-align:left}
 .actions button{margin-right:6px}
-.flex{display:flex;gap:8px;align-items:center}
+.flex{
+  display:flex;
+  gap:8px;
+  align-items:center
+  flex-wrap: wrap;  /* 小螢幕自動換行 */
+}
 .topbar{display:flex;gap:8px;align-items:center;margin-top:12px}
 .badge{padding:6px 8px;border-radius:999px;background:var(--accent);font-weight:600}
 .muted{color:#888}
