@@ -32,15 +32,22 @@ header h1{
   font-weight:bold;
   font-size:18px;
 }
+
+
+nav {
+  overflow-x: auto;           /* 超出寬度時可水平滑動 */
+  overflow-y: hidden;         /* 禁止上下滾動 */
+  -webkit-overflow-scrolling: touch; /* 手機滑動順暢 */
+}
+
 nav ul{
   list-style:none;
   display:flex;
   gap:12px;
   margin:0;
   padding:0;
-  overflow-x:auto;
   white-space:nowrap;
-  -webkit-overflow-scrolling:touch;
+
 }
 nav a{
   text-decoration:none;
@@ -58,7 +65,14 @@ nav a:hover, nav a.active{
 .row{display:flex;gap:12px;flex-wrap:wrap}
 .card{background:var(--card);border-radius:10px;padding:12px;box-shadow:0 6px 20px rgba(0,0,0,0.05)}
 .col{flex:1;min-width:280px}
-input,button,select,textarea{font-size:14px;padding:8px;border-radius:6px;border:1px solid #ddd}
+input,button,select,textarea{
+  font-size:14px;
+  padding:8px;
+  border-radius:6px;
+  border:1px solid #ddd
+
+}
+
 button{cursor:pointer;background:var(--btn);border:none}
 .small{font-size:13px;color:var(--muted)}
 .member-list{max-height:360px;overflow:auto;margin-top:8px}
