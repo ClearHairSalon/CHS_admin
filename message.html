@@ -53,6 +53,11 @@ nav a:hover, nav a.active{background:#7bd8a2;color:#fff;}
 main { max-width:1000px; margin:40px auto; padding:0 20px; }
 h1 { color:#4a7c53; text-align:center; margin-bottom:30px; }
 
+.table-wrapper {
+  overflow-x: auto;       /* 超出寬度時可水平滑動 */
+  -webkit-overflow-scrolling: touch; /* 手機滑動順暢 */
+}
+
 table {
   width:100%;
   border-collapse: collapse;
@@ -61,8 +66,15 @@ table {
   border-radius:8px;
   overflow:hidden;
 }
-th, td { border-bottom:1px solid #ccc; padding:12px 15px; text-align:left; }
-th { background:#7bd8a2; color:#fff; }
+th, td {
+  border-bottom:1px solid #ccc;
+  padding:12px 15px
+  ; text-align:left;
+}
+th {
+  background:#7bd8a2;
+  color:#fff;
+}
 tr:nth-child(even) { background:#e6f7ed; }
 tr.replied { opacity: 0.6; }
 </style>
@@ -83,20 +95,22 @@ tr.replied { opacity: 0.6; }
 
 <main>
   <h1>留言管理</h1>
-  <table>
-    <thead>
-      <tr>
-        <th>姓名</th>
-        <th>電子郵件</th>
-        <th>留言內容</th>
-        <th>送出時間</th>
-        <th>已回覆</th>
-      </tr>
-    </thead>
-    <tbody id="messages-table">
-      <!-- 留言會自動載入 -->
-    </tbody>
-  </table>
+  <div class="table-wrapper"></div>
+    <table>
+      <thead>
+        <tr>
+          <th>姓名</th>
+          <th>電子郵件</th>
+          <th>留言內容</th>
+          <th>送出時間</th>
+          <th>已回覆</th>
+        </tr>
+      </thead>
+      <tbody id="messages-table">
+        <!-- 留言會自動載入 -->
+      </tbody>
+    </table>
+  </div>
 </main>
 
 <!-- Firebase SDK -->
