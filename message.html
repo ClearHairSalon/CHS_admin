@@ -101,10 +101,11 @@ tr.replied { opacity: 0.6; }
       <thead>
         <tr>
           <th>姓名</th>
-          <th>電子郵件</th>
+          <th>聯絡方式</th>
           <th>留言內容</th>
           <th>送出時間</th>
           <th>已回覆</th>
+          <th>刪除</th> <!-- ✅ 新增 -->
         </tr>
       </thead>
       <tbody id="messages-table">
@@ -180,6 +181,28 @@ db.collection('messages').orderBy('createdAt', 'desc').onSnapshot(snapshot => {
     row.appendChild(repliedCell);
 
     tableBody.appendChild(row);
+
+
+
+        // 刪除按鈕
+    const deleteCell = document.createElement('td');
+    const deleteBtn = document.createElement('button');
+    deleteBtn.textContent = '刪除';
+    deleteBtn.style.background = '#ff6666';
+    deleteBtn.style.color = '#fff';
+    deleteBtn.style.border = 'none';
+    deleteBtn.style.padding = '5px 10px';
+    deleteBtn.style.borderRadius = '5px';
+    deleteBtn.style.cursor = 'pointer';
+    deleteBtn.addEventListener('click', async () => {
+      if (confirm('確定要刪除此留言嗎？')) {
+        await db.collection('messages').doc(data.id).delete();
+        row.remove(); // 從畫面移除這列
+        alert('留言已刪除');
+      }
+    });
+    deleteCell.appendChild(deleteBtn);
+    row.appendChild(deleteCell);
   });
 });
 </script>
