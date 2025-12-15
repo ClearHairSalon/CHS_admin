@@ -104,7 +104,7 @@ tr.replied { opacity: 0.6; }
           <th>聯絡方式</th>
           <th>留言內容</th>
           <th>送出時間</th>
-          <th>已回覆</th>
+          <th>已查看</th>
           <th>刪除</th> <!-- ✅ 新增 -->
         </tr>
       </thead>
@@ -169,7 +169,7 @@ db.collection('messages').orderBy('createdAt', 'desc').onSnapshot(snapshot => {
     timeCell.textContent = date.toLocaleString();
     row.appendChild(timeCell);
 
-    // 已回覆勾勾
+    // 已查看勾勾
     const repliedCell = document.createElement('td');
     const checkbox = document.createElement('input');
     checkbox.type = 'checkbox';
