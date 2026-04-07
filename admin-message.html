@@ -59,20 +59,12 @@ tr.replied { opacity: 0.6; }
   </div>
 </main>
 
-<script src="admin-navbar.js"></script>
-
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+<script src="admin-navbar.js"></script>
 <script>
-const firebaseConfig = {
-  apiKey: "AIzaSyCfxDOOzTLbmQRfvW275hJrtOnX_t-6-yc",
-  authDomain: "hsinformation.firebaseapp.com",
-  projectId: "hsinformation",
-  storageBucket: "hsinformation.firebasestorage.app",
-  messagingSenderId: "245515525647",
-  appId: "1:245515525647:web:00bf24514009bddd02cd7a"
-};
-firebase.initializeApp(firebaseConfig);
+
 const db = firebase.firestore();
 
 const tableBody = document.getElementById('messages-table');
